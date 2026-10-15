@@ -4,7 +4,7 @@ Connect your mailbox and manage messages and email rules. This is a standalone a
 
 ## Install in Cube
 
-Use Cube’s Add app from repo with https://github.com/collabs-inc/cube-agent-mail. Cube installs dependencies, builds the app, and runs it behind its authenticated app gate. Node.js 22 or newer is required.
+Use Cube’s Add app from repo with https://github.com/collabs-inc/cube-agent-mail. Cube installs dependencies, builds the app, and runs it behind its authenticated app gate. Node.js 22.22 or newer is required.
 
 For a manual local check, run these commands from the checkout:
 
