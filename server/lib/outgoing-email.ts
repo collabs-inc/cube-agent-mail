@@ -15,6 +15,7 @@ import {
   type TrackingContext,
 } from "./email-tracking.js";
 import { getStoredUpload } from "./upload-store.js";
+import { CUBE_FILES_PREFIX, getCubeStorage } from "./cube-storage.js";
 
 const UPLOADS_DIR = path.resolve("data/uploads");
 const MAX_ATTACHMENT_FETCH_BYTES = 15 * 1024 * 1024;
@@ -34,6 +35,13 @@ function stripCrlf(value: string): string {
 }
 
 async function fetchStoredUpload(url: string): Promise<Buffer> {
+  if (url.startsWith(CUBE_FILES_PREFIX)) {
+    const { data } = await getCubeStorage().readPublic(url.slice(CUBE_FILES_PREFIX.length));
+    if (data.byteLength > MAX_ATTACHMENT_FETCH_BYTES) {
+      throw new Error("Stored upload is too large to attach");
+    }
+    return data;
+  }
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error(`Stored upload fetch failed: ${response.status}`);
